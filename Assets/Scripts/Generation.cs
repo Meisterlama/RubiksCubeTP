@@ -8,6 +8,13 @@ public class Generation : MonoBehaviour
 {
     [SerializeField] public GameObject cubePrefab;
     [SerializeField] private int size = 3;
+
+    public int Size
+    {
+        get => size;
+        set => size = value;
+    }
+
     [SerializeField] private int scale = 1;
 
     private List<GameObject> _spawnedCubes = new List<GameObject>();
@@ -41,14 +48,30 @@ public class Generation : MonoBehaviour
         }
     }
 
+    void DestroyCube()
+    {
+        foreach (GameObject spawnedCube in _spawnedCubes)
+        {
+            Destroy(spawnedCube);
+        }
+    }
+
+    public void Reload()
+    {
+        DestroyCube();
+        transform.rotation = Quaternion.Euler(0, 0, 0);
+        CreateCube();
+    }
+
+    public void ChangeCubeSize(float newSize)
+    {
+        size = (int)newSize;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         CreateCube();
-        foreach (GameObject spawnedCube in _spawnedCubes)
-        {
-            Debug.Log(spawnedCube);
-        }
     }
 
     // Update is called once per frame
