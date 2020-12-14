@@ -20,6 +20,8 @@ public class CubeController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+        // Cube Rotation
         if (Input.GetMouseButton(1))
         {
             Vector3 mouseDeltaAxis = _oldMousePosition - Input.mousePosition;
@@ -34,7 +36,20 @@ public class CubeController : MonoBehaviour
             transform.RotateAround(Vector3.zero, mouseDeltaAxis, mouseDeltaAxis.magnitude);
         }
 
-        var targetCameraTransform = TargetCamera.transform;
+        else if (Input.GetMouseButtonDown(0))
+        {
+            Ray ray = TargetCamera.ScreenPointToRay (Input.mousePosition);
+            RaycastHit hit;
+            
+            if (Physics.Raycast(ray, out hit, 50f))
+            {
+                GameObject cube = hit.transform.gameObject;
+                cube.SetActive(false);
+            }    
+        }
+
+        // Camera Zoom
+        Transform targetCameraTransform = TargetCamera.transform;
         
         Vector3 newCameraPosition = targetCameraTransform.position + Input.mouseScrollDelta.y * zoomSensitivity * targetCameraTransform.forward;
         newCameraPosition.z = Mathf.Clamp(newCameraPosition.z, -5f, -2f);

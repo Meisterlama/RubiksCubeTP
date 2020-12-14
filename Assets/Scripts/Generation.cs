@@ -21,6 +21,7 @@ public class Generation : MonoBehaviour
 
     void CreateCube()
     {
+        // Create the cubes
         float offset = 0.5f * (size - 1) * scale;
         for (int x = 0; x < size; x++)
         {
@@ -41,6 +42,37 @@ public class Generation : MonoBehaviour
                         GameObject cube = Instantiate(cubePrefab, position, rotation);
                         cube.transform.localScale = cubeScale * scale;
                         cube.transform.parent = gameObject.transform;
+
+                        CubeManager cubeManager = cube.GetComponent<CubeManager>();
+
+                        // CubeColoration
+                        if (x == 0)
+                        {
+                            cubeManager.LoadFaceColors(FaceDirection.Left);
+                        }
+                        else if (x == size - 1)
+                        {
+                            cubeManager.LoadFaceColors(FaceDirection.Right);
+                        }
+
+                        if (y == 0)
+                        {
+                            cubeManager.LoadFaceColors(FaceDirection.Down);
+                        }
+                        else if (y == size - 1)
+                        {
+                            cubeManager.LoadFaceColors(FaceDirection.Up);
+                        }
+
+                        if (z == 0)
+                        {
+                            cubeManager.LoadFaceColors(FaceDirection.Backward);
+                        }
+                        else if (z == size - 1)
+                        {
+                            cubeManager.LoadFaceColors(FaceDirection.Forward);
+                        }
+
                         _spawnedCubes.Add(cube);
                     }
                 }
@@ -54,6 +86,8 @@ public class Generation : MonoBehaviour
         {
             Destroy(spawnedCube);
         }
+
+        _spawnedCubes.Clear();
     }
 
     public void Reload()
@@ -65,7 +99,7 @@ public class Generation : MonoBehaviour
 
     public void ChangeCubeSize(float newSize)
     {
-        size = (int)newSize;
+        size = (int) newSize;
     }
 
     // Start is called before the first frame update
