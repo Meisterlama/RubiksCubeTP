@@ -9,22 +9,36 @@ public class Generation : MonoBehaviour
     [SerializeField] public GameObject cubePrefab;
     [SerializeField] private int size = 3;
 
+    [SerializeField] private GameObject defaultPlane;
+
     public int Size
     {
         get => size;
         set => size = value;
     }
 
-    [SerializeField] private int scale = 1;
 
     private List<GameObject> _spawnedCubes = new List<GameObject>();
 
     void CreateCube()
     {
         // Create the cubes
-        float offset = 0.5f * (size - 1) * scale;
+        float offset = 0.5f * (size - 1);
         for (int x = 0; x < size; x++)
         {
+            var Xplane = Instantiate(defaultPlane, transform);
+            var Yplane = Instantiate(defaultPlane, transform);
+            var Zplane = Instantiate(defaultPlane, transform);
+
+            var pos = (x - offset) / size ;
+
+            Xplane.transform.Translate(new Vector3(0, 0, pos ));
+            Xplane.transform.Rotate(new Vector3(90, 0, 0));
+            Yplane.transform.Translate(new Vector3(0, pos, 0));
+            Yplane.transform.Rotate(new Vector3(0, 90, 0));
+            Zplane.transform.Translate(new Vector3(pos, 0, 0));
+            Zplane.transform.Rotate(new Vector3(0, 0, 90));
+
             for (int y = 0; y < size; y++)
             {
                 for (int z = 0; z < size; z++)
@@ -35,12 +49,12 @@ public class Generation : MonoBehaviour
                         Vector3 position = new Vector3(x, y, z);
 
                         position -= Vector3.one * offset;
-                        position *= scale / (float) size;
+                        position /= (float) size;
                         position += gameObject.transform.position;
                         Quaternion rotation = gameObject.transform.rotation;
                         Vector3 cubeScale = Vector3.one / size;
                         GameObject cube = Instantiate(cubePrefab, position, rotation);
-                        cube.transform.localScale = cubeScale * scale;
+                        cube.transform.localScale = cubeScale;
                         cube.transform.parent = gameObject.transform;
 
                         CubeManager cubeManager = cube.GetComponent<CubeManager>();
