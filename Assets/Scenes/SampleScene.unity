@@ -284,7 +284,8 @@ MonoBehaviour:
   cubePrefab: {fileID: 7226957836731568863, guid: f37a32c70142ae244a2cdf16cde98ce2,
     type: 3}
   size: 2
-  scale: 1
+  defaultPlane: {fileID: 3696524426996383390, guid: 586d4af8f658e9946b2e5614089fc258,
+    type: 3}
 --- !u!4 &299115654
 Transform:
   m_ObjectHideFlags: 0
@@ -313,6 +314,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   zoomSensitivity: 0.2
   TargetCamera: {fileID: 963194227}
+  RubiksCube: {fileID: 299115652}
 --- !u!1 &529994340
 GameObject:
   m_ObjectHideFlags: 0

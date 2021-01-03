@@ -31,13 +31,17 @@ public class Generation : MonoBehaviour
             var Zplane = Instantiate(defaultPlane, transform);
 
             var pos = (x - offset) / size ;
-
-            Xplane.transform.Translate(new Vector3(0, 0, pos ));
-            Xplane.transform.Rotate(new Vector3(90, 0, 0));
-            Yplane.transform.Translate(new Vector3(0, pos, 0));
-            Yplane.transform.Rotate(new Vector3(0, 90, 0));
-            Zplane.transform.Translate(new Vector3(pos, 0, 0));
-            Zplane.transform.Rotate(new Vector3(0, 0, 90));
+            
+            Xplane.transform.MyTranslate(new Vector3(0, 0, pos ));
+            Xplane.transform.MyRotate(new Vector3(90, 0, 0));
+            Yplane.transform.MyTranslate(new Vector3(0, pos, 0));
+            Yplane.transform.MyRotate(new Vector3(0, 90, 0));
+            Zplane.transform.MyTranslate(new Vector3(pos, 0, 0));
+            Zplane.transform.MyRotate(new Vector3(0, 0, 90));
+            
+            _spawnedCubes.Add(Xplane);
+            _spawnedCubes.Add(Zplane);
+            _spawnedCubes.Add(Yplane);
 
             for (int y = 0; y < size; y++)
             {
